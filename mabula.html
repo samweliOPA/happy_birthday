@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Mabula</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Consolas, monospace;
+      background: #0d1117;
+      color: #00ff99;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 900px;
+      background: rgba(0,0,0,0.85);
+      border: 1px solid #00ff99;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 0 25px rgba(0,255,153,0.4);
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #00ffcc;
+    }
+
+    h2 {
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 30px;
+    }
+
+    .terminal {
+      background: #161b22;
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 4px solid #00ff99;
+      line-height: 1.8;
+      font-size: 1rem;
+      color: #c9d1d9;
+    }
+
+    .highlight {
+      color: #00ff99;
+      font-weight: bold;
+    }
+
+    .quote {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #58a6ff;
+    }
+
+    .footer {
+      margin-top: 35px;
+      text-align: center;
+      color: #8b949e;
+      font-size: 0.9rem;
+    }
+
+    .code {
+      color: #f85149;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 22px;
+      background: #00ff99;
+      color: #000;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: 0.3s ease;
+      min-width: 170px;
+      box-sizing: border-box;
+    }
+
+    .btn:hover {
+      background: #00cc77;
+      transform: scale(1.05);
+    }
+
+    .responsive-img {
+      width: min(100%, 220px);
+      height: auto;
+      border-radius: 15px;
+      border: 2px solid #00ff99;
+      display: block;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 20px 0;
+      }
+
+      .container {
+        width: 95%;
+        padding: 24px;
+        border-radius: 18px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      h2 {
+        font-size: 1.1rem;
+        margin-bottom: 22px;
+      }
+
+      .terminal {
+        font-size: 0.95rem;
+        padding: 18px;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 100%;
+        margin: 15px auto 0;
+      }
+
+      .quote {
+        font-size: 1rem;
+      }
+
+      .footer {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <div class="container">
+    <h1>Happy Birthday Mabula 🎉</h1>
+    <h2>The Legend. The Birthday Boss. The Main Character Today 😄</h2>
+
+    <div class="terminal">
+      <p><span class="highlight">Birthday Alert:</span> Mabula has officially leveled up 🎂</p>
+      <p><span class="highlight">Mission:</span> Eat cake, laugh hard, and enjoy the day 😎</p>
+      <p><span class="highlight">Energy Level:</span> 100% Activated ⚡</p>
+      <br>
+      <p>
+        Today is your special day, Mabula.
+        Forget stress, forget problems, and enjoy every moment.
+      </p>
+      <p>
+        May your happiness increase faster than internet speed,
+        may your wallet stay strong,
+        and may your jokes always make people laugh 😂
+      </p>
+      <p>
+        You are an important person to many people around you.
+        Stay happy, stay real, and keep smiling.
+      </p>
+      <br>
+      <p class="code">Birthday Mode = ON 🎉</p>
+    </div>
+
+    <div style="margin-top:25px;text-align:center;">
+      <button class="btn" onclick="showMessage()">Click for Surprise 🎁</button>
+    </div>
+
+    <div id="surprise" style="display:none;margin-top:20px;text-align:center;font-size:1.3rem;color:#ffcc00;">
+      😂 Mabula, today calories do not count. Eat everything!
+    </div>
+
+    <div style="margin-top:30px;text-align:center;">
+      <img src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" width="220" style="border-radius:15px;border:2px solid #00ff99;">
+    </div>
+
+    <div class="quote">
+      “A birthday without laughter is just a meeting.” 😄
+    </div>
+
+    <div style="text-align:center;">
+      <a class="btn" href="#" onclick="launchConfetti()">Launch Birthday Party 🎊</a>
+    </div>
+
+    <div class="footer">
+      Crafted with respect and friendship.
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const letters = '01';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+    for (let x = 0; x < columns; x++) {
+      drops[x] = 1;
+    }
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#00ff99';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 33);
+
+    function showMessage() {
+      document.getElementById('surprise').style.display = 'block';
+    }
+
+    function launchConfetti() {
+      alert('🎉 Happy Birthday Mabula! Today belongs to you! 🎂');
+    }
+  </script>
+</body>
+</html>
