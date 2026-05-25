@@ -190,7 +190,7 @@
     </div>
 
     <div style="margin-top:30px;text-align:center;">
-      <img src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" width="220" style="border-radius:15px;border:2px solid #00ff99;">
+      <img class="responsive-img" src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" alt="Birthday animation">
     </div>
 
     <div class="quote">
@@ -244,11 +244,25 @@
     setInterval(draw, 33);
 
     function showMessage() {
-      document.getElementById('surprise').style.display = 'block';
+      Swal.fire({
+        icon: 'success',
+        title: 'Surprise Mabula!',
+        html: '😂 Mabula, today calories do not count. Eat everything!',
+        background: '#0d1117',
+        color: '#00ff99',
+        confirmButtonColor: '#00ff99'
+      });
     }
 
     function launchConfetti() {
-      alert('🎉 Happy Birthday Mabula! Today belongs to you! 🎂');
+      Swal.fire({
+        icon: 'info',
+        title: 'Birthday Party',
+        html: '🎉 Happy Birthday Mabula! Today belongs to you! 🎂',
+        background: '#0d1117',
+        color: '#00ff99',
+        confirmButtonColor: '#00ff99'
+      });
     }
   </script>
 </body>
